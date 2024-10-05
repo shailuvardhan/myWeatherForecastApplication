@@ -1,0 +1,31 @@
+.header-container {
+  background-color: aqua;
+  background-size: cover;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.search-container {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search-input {
+  width: 90%;
+  background-color: white;
+  height: 25px;
+  outline: none;
+  border: 0;
+}
+.search-icon {
+  width: 10%;
+  height: 25px;
+  background-color: white;
+  font-size: fit-content;
+  padding: 5px;
+}
