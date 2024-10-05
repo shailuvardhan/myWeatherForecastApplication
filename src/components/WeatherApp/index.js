@@ -1,9 +1,15 @@
 import { Component } from "react";
 import axios from "axios";
 import Header from "../Header";
+import CurrentWeather from "../CurrentWeather";
 
 class WeatherApp extends Component {
-  state = { searchInput: "Hyderabad" };
+  state = {
+    searchInput: "Hyderabad",
+    address: "",
+    fortNightList: [],
+    currentWeatherData: {},
+  };
 
   onchangeSearchInput = (event) => {
     this.setState({ searchInput: event.target.value });
@@ -39,12 +45,13 @@ class WeatherApp extends Component {
     };
     try {
       const response = await axios.request(options);
-      console.log(response.data);
-      const thisData = Object.values(response.data.locations)[0];
-      console.log(this.data);
-      //   setLocation(thisData.address);
-      //   setValues(thisData.values);
-      //   setWeather(thisData.values[0]);
+      const fetchedData = Object.values(response.data.locations)[0];
+
+      this.setState({
+        address: fetchedData.address,
+        fortNightList: fetchedData.values,
+        currentWeatherData: fetchedData.values[0],
+      });
     } catch (e) {
       console.error(e);
       // if the api throws error.
@@ -53,8 +60,13 @@ class WeatherApp extends Component {
   };
 
   render() {
-    const { searchInput } = this.state;
-    console.log(searchInput);
+    const {
+      searchInput,
+      address,
+      fortNightList,
+      currentWeatherData,
+    } = this.state;
+
     return (
       <div className="weather-app-container">
         <Header
@@ -62,7 +74,12 @@ class WeatherApp extends Component {
           onKeyUpSearchInput={this.onKeyUpSearchInput}
           searchInput={searchInput}
         />
-        <div className="Application-container"></div>
+        <div className="Application-container">
+          <CurrentWeather
+            currentWeatherData={currentWeatherData}
+            address={address}
+          />
+        </div>
       </div>
     );
   }
