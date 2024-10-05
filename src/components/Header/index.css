@@ -1,5 +1,5 @@
 .header-container {
-  background-color: aqua;
+  background-color: transparent;
   background-size: cover;
   height: 10vh;
   display: flex;
@@ -14,18 +14,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 5px;
 }
 .search-input {
   width: 90%;
   background-color: white;
-  height: 25px;
+  height: 30px;
   outline: none;
   border: 0;
+  border-top-right-radius: 9px;
+  border-bottom-right-radius: 9px;
 }
 .search-icon {
   width: 10%;
-  height: 25px;
+  height: 30px;
   background-color: white;
   font-size: fit-content;
   padding: 5px;
+  border-top-left-radius: 9px;
+  border-bottom-left-radius: 9px;
+}
+.title {
+  font-size: 1.3em;
 }

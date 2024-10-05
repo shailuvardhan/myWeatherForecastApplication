@@ -2,12 +2,16 @@ import { Component } from "react";
 import axios from "axios";
 import Header from "../Header";
 import CurrentWeather from "../CurrentWeather";
+import MiniCard from "../MiniCard";
+import "./index.css";
+
+import clear from "../../Assets/Images/clear.jpg";
 
 class WeatherApp extends Component {
   state = {
     searchInput: "Hyderabad",
     address: "",
-    fortNightList: [],
+    WeekForecastList: [],
     currentWeatherData: {},
   };
 
@@ -49,7 +53,7 @@ class WeatherApp extends Component {
 
       this.setState({
         address: fetchedData.address,
-        fortNightList: fetchedData.values,
+        WeekForecastList: fetchedData.values,
         currentWeatherData: fetchedData.values[0],
       });
     } catch (e) {
@@ -63,12 +67,21 @@ class WeatherApp extends Component {
     const {
       searchInput,
       address,
-      fortNightList,
+      WeekForecastList,
       currentWeatherData,
     } = this.state;
 
     return (
-      <div className="weather-app-container">
+      <div
+        style={{
+          backgroundImage: `url(${clear})`,
+          height: "100vh",
+          width: "100%",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          color: "white",
+        }}
+      >
         <Header
           onchangeSearchInput={this.onchangeSearchInput}
           onKeyUpSearchInput={this.onKeyUpSearchInput}
@@ -79,6 +92,16 @@ class WeatherApp extends Component {
             currentWeatherData={currentWeatherData}
             address={address}
           />
+          <ul className="mini-card-list">
+            {WeekForecastList.slice(1, 7).map((cardItem) => (
+              <MiniCard
+                key={cardItem.id}
+                time={cardItem.datetime}
+                temp={cardItem.temp}
+                iconString={cardItem.conditions}
+              />
+            ))}
+          </ul>
         </div>
       </div>
     );
