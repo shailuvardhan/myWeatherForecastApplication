@@ -6,4 +6,39 @@
   border-radius: 10px;
   border: 1px solid rgba(225, 225, 225, 0.18);
   width: 40%;
+  text-align: center;
+  padding: 20px;
+}
+
+.hori {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.box {
+  flex: 1;
+  text-align: center;
+  padding: 0.5rem;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  margin: 10px;
+}
+.blue {
+  background-color: #2563eb;
+}
+.green {
+  background-color: #34c759;
+}
+.place {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.weather-icon {
+  width: 40%;
+}
+.main-temp {
+  font-weight: bold;
+  font-size: 48px;
 }

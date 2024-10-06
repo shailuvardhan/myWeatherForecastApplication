@@ -3,9 +3,16 @@ import axios from "axios";
 import Header from "../Header";
 import CurrentWeather from "../CurrentWeather";
 import MiniCard from "../MiniCard";
-import "./index.css";
 
 import clear from "../../Assets/Images/clear.jpg";
+import cloudy from "../../Assets/Images/Cloudy.png";
+import fog from "../../Assets/Images/fog.png";
+import rainyCity from "../../Assets/Images/Rainy_city.png";
+import snow from "../../Assets/Images/Snow.png";
+import sunnyCity from "../../Assets/Images/Sunny_city.png";
+import thunderstormCity from "../../Assets/Images/thunderstorm-city.png";
+
+import "./index.css";
 
 class WeatherApp extends Component {
   state = {
@@ -13,11 +20,13 @@ class WeatherApp extends Component {
     address: "",
     WeekForecastList: [],
     currentWeatherData: {},
+    setImage: clear,
   };
 
   onchangeSearchInput = (event) => {
     this.setState({ searchInput: event.target.value });
   };
+
   onKeyUpSearchInput = (event) => {
     if (event.key === "Enter") {
       this.getWeatherReport();
@@ -51,6 +60,34 @@ class WeatherApp extends Component {
       const response = await axios.request(options);
       const fetchedData = Object.values(response.data.locations)[0];
 
+      if (fetchedData.values[0].conditions) {
+        let imageString = fetchedData.values[0].conditions;
+        if (imageString.toLowerCase().includes("clear")) {
+          this.setState({ setImage: clear });
+        } else if (imageString.toLowerCase().includes("cloud")) {
+          this.setState({ setImage: cloudy });
+        } else if (
+          imageString.toLowerCase().includes("rain") ||
+          imageString.toLowerCase().includes("shower")
+        ) {
+          this.setState({ setImage: rainyCity });
+        } else if (imageString.toLowerCase().includes("snow")) {
+          this.setState({ setImage: snow });
+        } else if (imageString.toLowerCase().includes("fog")) {
+          this.setState({ setImage: fog });
+        } else if (
+          imageString.toLowerCase().includes("thunder") ||
+          imageString.toLowerCase().includes("storm")
+        ) {
+          this.setState({ setImage: thunderstormCity });
+        } else if (
+          imageString.toLowerCase().includes("sun") ||
+          imageString.toLowerCase().includes("sunny")
+        ) {
+          this.setState({ setImage: sunnyCity });
+        }
+      }
+
       this.setState({
         address: fetchedData.address,
         WeekForecastList: fetchedData.values,
@@ -69,16 +106,15 @@ class WeatherApp extends Component {
       address,
       WeekForecastList,
       currentWeatherData,
+      setImage,
     } = this.state;
 
     return (
       <div
+        className="app"
         style={{
-          backgroundImage: `url(${clear})`,
-          height: "100vh",
-          width: "100%",
+          backgroundImage: `url(${setImage})`,
           backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
           color: "white",
         }}
       >
@@ -90,6 +126,7 @@ class WeatherApp extends Component {
         <div className="Application-container">
           <CurrentWeather
             currentWeatherData={currentWeatherData}
+            iconString={currentWeatherData.conditions}
             address={address}
           />
           <ul className="mini-card-list">
